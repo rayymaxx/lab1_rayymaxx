@@ -128,19 +128,35 @@ def count_signs(road_list):
 # TODO 7: Keep asking until the user types a whole number from low to high.
 # Use try/except for text that is not a number. Return the number as an int.
 def ask_for_number(question, low, high):
-    pass
+    while True:
+        user_input = input(question)
+        try:
+            number = int(float(user_input))
+
+            if low <= number <= high:
+                return number
+        except ValueError:
+            pass
 
 
 # TODO 8: Insert sign at position. Return False if position is not from 0 to len(road_list).
 # Otherwise insert and return True.
 def insert_sign(road_list, sign, position):
-    pass
+    if not (0 <= position <= len(road_list)):
+        return False
+
+    road_list.insert(position, sign)
+    return True
 
 
 # TODO 9: Replace the sign at index with a new sign. Return False if index is not
 # from 0 to len(road_list) - 1. Otherwise replace it and return True.
 def replace_sign(road_list, sign, index):
-    pass
+    if not (0 <= index < len(road_list)):
+        return False
+
+    road_list[index] = sign 
+    return True
 
 
 # TODO 10: Summarise the journey. Use a loop to count the signs we pass
@@ -148,7 +164,15 @@ def replace_sign(road_list, sign, index):
 # (signs_passed, length_m, START_NAME, END_NAME)
 # length_m is the number of segments times SEGMENT_M.
 def get_journey_summary(road_list):
-    pass
+    signs_passed = 0 
+
+    for segment in road_list:
+        if segment != "road":
+            signs_passed += 1
+
+    length_m = len(road_list) * SEGMENT_M
+    
+    return (signs_passed, length_m, START_NAME, END_NAME)
 
 
 if __name__ == "__main__":
