@@ -8,7 +8,7 @@ Run with:   python road_simulation.py or python3 road_simulation.py
 """
 
 SEGMENT_M = 100
-ZEBRA_WAIT = 15
+ZEBRA_WAIT = 5
 ACCELERATION = 5
 BRAKING = 20
 START_NAME = "ALU Rwanda"
@@ -50,18 +50,11 @@ def is_valid_sign(sign):
 def get_sign_type(sign):
     if sign == "zebra":
         return "zebra"
-    elif sign == "bus":
+    if sign == "bus":
         return "bus"
 
-    if isinstance(sign, (int, float)):
+    if isinstance(sign, str) and sign.isdecimal():
         return "speed"
-    if isinstance(sign, str):
-        try:
-            float(sign)
-            return "speed"
-        except ValueError:
-            pass
-
     return "road"
 
 
@@ -70,15 +63,8 @@ def get_sign_type(sign):
 
 # TODO 3: If the sign is a speed sign, return its number as an int. Else return current_limit.
 def get_speed_limit(sign, current_limit):
-    if isinstance(sign, (float, int)):
+    if get_sign_type(sign) == "speed":
         return int(sign)
-
-    if isinstance(sign, str):
-        try:
-            return int(float(sign))
-        except ValueError:
-            pass
-
     return current_limit
 
 
@@ -129,15 +115,13 @@ def count_signs(road_list):
 # Use try/except for text that is not a number. Return the number as an int.
 def ask_for_number(question, low, high):
     while True:
-        user_input = input(question)
         try:
-            number = int(float(user_input))
-
+            number = int(input(question).strip())
             if low <= number <= high:
                 return number
+            print(f"Please enter a number from {low} to {high}.")
         except ValueError:
-            pass
-
+            print("That is not a whole number. Try again.")
 
 # TODO 8: Insert sign at position. Return False if position is not from 0 to len(road_list).
 # Otherwise insert and return True.
