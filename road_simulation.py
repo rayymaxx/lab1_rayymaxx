@@ -105,7 +105,22 @@ def adjust_speed(speed, target):
 
 # TODO 6: Use a loop. Return (speed_signs, zebras, buses).
 def count_signs(road_list):
-    pass
+    speed_signs = 0 
+    zebras = 0
+    buses = 0
+
+    for sign in road_list:
+        sign_type = get_sign_type(sign)
+
+        if sign_type == "speed":
+            speed_signs += 1
+        if sign_type == "zebra":
+            zebras += 1 
+        if sign_type == "bus":
+            buses += 1
+
+    return (speed_signs, zebras, buses)
+
 
 
 # ==================== PART 3: SAFE INPUT AND JOURNEY SUMMARY ====================
