@@ -94,7 +94,13 @@ def get_target_speed(limit, stop_timer):
 # Below target: add ACCELERATION (never go above target).
 # Above target: subtract BRAKING (never go below target).
 def adjust_speed(speed, target):
-    pass
+    if speed < target:
+        return min(target, speed + ACCELERATION)
+
+    if speed > target:
+        return max(target, speed - BRAKING)
+
+    return speed
 
 
 # TODO 6: Use a loop. Return (speed_signs, zebras, buses).
