@@ -48,19 +48,46 @@ def is_valid_sign(sign):
 
 # TODO 2: Return "bus", "zebra", "speed" (a number) or "road" (anything else).
 def get_sign_type(sign):
-    pass
+    if sign == "zebra":
+        return "zebra"
+    elif sign == "bus":
+        return "bus"
+
+    if isinstance(sign, (int, float)):
+        return "speed"
+    if isinstance(sign, str):
+        try:
+            float(sign)
+            return "speed"
+        except ValueError:
+            pass
+
+    return "road"
+
 
 
 # ==================== PART 2: TAKE ACTION ====================
 
 # TODO 3: If the sign is a speed sign, return its number as an int. Else return current_limit.
 def get_speed_limit(sign, current_limit):
-    pass
+    if isinstance(sign, (float, int)):
+        return int(sign)
+
+    if isinstance(sign, str):
+        try:
+            return int(float(sign))
+        except ValueError:
+            pass
+
+    return current_limit
 
 
 # TODO 4: Return 0 while stop_timer is above 0, otherwise return limit.
 def get_target_speed(limit, stop_timer):
-    pass
+    if stop_timer > 0:
+        return 0 
+
+    return limit
 
 
 # TODO 5: Move speed ONE step towards target and return it.
